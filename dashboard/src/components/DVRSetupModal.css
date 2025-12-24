@@ -1,0 +1,77 @@
+.dvr-setup-modal {
+    max-width: 500px;
+}
+
+.dvr-info {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.dvr-info p {
+    margin: 0.5rem 0;
+    color: white;
+}
+
+.dvr-info strong {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.info-text {
+    opacity: 0.9;
+    font-size: 0.875rem;
+}
+
+.dvr-setup-modal form {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.dvr-setup-modal small {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    font-size: 0.875rem;
+}
+
+.preview-info {
+    background: var(--bg-dark);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.preview-info strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.preview-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.preview-info li {
+    padding: 0.25rem 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.preview-info li::before {
+    content: '📹 ';
+    margin-right: 0.5rem;
+}

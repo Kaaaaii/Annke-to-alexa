@@ -1,0 +1,55 @@
+.alexa-modal {
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.setup-steps {
+    text-align: left;
+    color: #333;
+}
+
+.setup-steps h3 {
+    margin-top: 1.5rem;
+    color: #2c3e50;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.code-block {
+    background: #282c34;
+    color: #abb2bf;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+}
+
+.kv-pairs {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.kv-pair {
+    display: flex;
+    flex-direction: column;
+}
+
+.kv-pair label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.kv-pair input {
+    padding: 8px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    color: #333;
+}

@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  annke-to-alexa:
+    build: .
+    container_name: annke-to-alexa
+    restart: unless-stopped
+    ports:
+      - "3000:3000"   # Main API
+      - "1984:1984"   # go2rtc API
+      - "8554:8554"   # RTSP
+      - "8555:8555"   # WebRTC
+    volumes:
+      - ./data:/app/data
+      - ./config.json:/app/config.json:ro
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    networks:
+      - annke-network
+    # Host network mode for better ONVIF discovery (optional)
+    # network_mode: host
+
+  # Optional: Coturn TURN server for better WebRTC connectivity
+  coturn:
+    image: coturn/coturn:latest
+    container_name: coturn
+    restart: unless-stopped
+    ports:
+      - "3478:3478/udp"
+      - "3478:3478/tcp"
+      - "49160-49200:49160-49200/udp"
+    volumes:
+      - ./coturn/turnserver.conf:/etc/coturn/turnserver.conf:ro
+    networks:
+      - annke-network
+    command: ["-c", "/etc/coturn/turnserver.conf"]
+
+  # Optional: Cloudflare Tunnel
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - annke-network
+    depends_on:
+      - annke-to-alexa
+
+networks:
+  annke-network:
+    driver: bridge
