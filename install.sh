@@ -23,6 +23,15 @@ echo "Detected OS: $OS"
 echo "Detected Architecture: $ARCH"
 echo ""
 
+# Install required system dependencies
+if [ "$OS" = "Linux" ]; then
+  if ! command -v unzip &> /dev/null; then
+    echo "📦 Installing unzip (required for Bun)..."
+    sudo apt-get update
+    sudo apt-get install -y unzip
+  fi
+fi
+
 # Install Bun if not present
 if ! command -v bun &> /dev/null; then
   echo "📦 Installing Bun..."
