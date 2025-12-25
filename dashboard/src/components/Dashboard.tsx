@@ -5,7 +5,6 @@ import CameraCard from './CameraCard';
 import AddCameraModal from './AddCameraModal';
 import DVRSetupModal from './DVRSetupModal';
 import GridViewModal from './GridViewModal';
-import AlexaSetupModal from './AlexaSetupModal';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -14,7 +13,6 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [discovering, setDiscovering] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
-    const [showAlexaModal, setShowAlexaModal] = useState(false);
     const [showGridView, setShowGridView] = useState(false);
     const [dvrSetupIP, setDvrSetupIP] = useState<string | null>(null);
 
@@ -138,12 +136,6 @@ export default function Dashboard() {
                     </button>
                     <button
                         className="btn btn-secondary"
-                        onClick={() => setShowAlexaModal(true)}
-                    >
-                        🗣️ Alexa Setup
-                    </button>
-                    <button
-                        className="btn btn-secondary"
                         onClick={() => setShowAddModal(true)}
                     >
                         ➕ Add Camera
@@ -216,10 +208,6 @@ export default function Dashboard() {
                     cameras={cameras}
                     onClose={() => setShowGridView(false)}
                 />
-            )}
-
-            {showAlexaModal && (
-                <AlexaSetupModal onClose={() => setShowAlexaModal(false)} />
             )}
         </div>
     );

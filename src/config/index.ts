@@ -29,11 +29,7 @@ const configSchema = z.object({
 
     // Cloudflare
     cloudflareUrl: z.string().optional(),
-
-    // Alexa
-    alexaClientId: z.string().optional(),
-    alexaClientSecret: z.string().optional(),
-    alexaRedirectUri: z.string().optional(),
+    cloudflareToken: z.string().optional(),
 
     // Discovery
     autoDiscover: z.boolean().default(true),
@@ -68,9 +64,7 @@ function loadConfig(): Config {
         go2rtcApi: process.env.GO2RTC_API || 'http://localhost:1984',
         go2rtcEnabled: process.env.GO2RTC_ENABLED === 'true',
         cloudflareUrl: process.env.CLOUDFLARE_TUNNEL_URL,
-        alexaClientId: process.env.ALEXA_CLIENT_ID,
-        alexaClientSecret: process.env.ALEXA_CLIENT_SECRET,
-        alexaRedirectUri: process.env.ALEXA_REDIRECT_URI,
+        cloudflareToken: process.env.CLOUDFLARE_TUNNEL_TOKEN,
         autoDiscover: process.env.AUTO_DISCOVER !== 'false',
         discoveryInterval: parseInt(process.env.DISCOVERY_INTERVAL || '300000', 10),
         maxCameras: parseInt(process.env.MAX_CAMERAS || '16', 10),

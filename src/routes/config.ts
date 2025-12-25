@@ -20,10 +20,8 @@ interface AppConfig {
         turnUsername?: string;
         turnPassword?: string;
     };
-    alexa?: {
-        clientId?: string;
-        clientSecret?: string;
-        redirectUri?: string;
+    cloudflare?: {
+        token?: string;
     };
     discovery?: {
         autoDiscover: boolean;
@@ -48,7 +46,7 @@ router.get('/', async (req: Request, res: Response) => {
         const mergedConfig = {
             ...fileConfig,
             dvr: { ...fileConfig.dvr, ip: envConfig.dvrIp, port: envConfig.dvrPort || fileConfig.dvr?.port },
-            alexa: { ...fileConfig.alexa, clientId: envConfig.alexaClientId },
+            cloudflare: { ...fileConfig.cloudflare, token: envConfig.cloudflareToken },
             cloudflareUrl: envConfig.cloudflareUrl,
             go2rtcEnabled: envConfig.go2rtcEnabled,
             rtspTransport: envConfig.rtspTransport
@@ -60,9 +58,9 @@ router.get('/', async (req: Request, res: Response) => {
                 ...mergedConfig.dvr,
                 password: '***'
             } : undefined,
-            alexa: mergedConfig.alexa ? {
-                ...mergedConfig.alexa,
-                clientSecret: '***' // Don't expose secret
+            cloudflare: mergedConfig.cloudflare ? {
+                ...mergedConfig.cloudflare,
+                token: '***' // Don't expose token
             } : undefined,
             setupCompleted: fileConfig.setupCompleted || false,
             cloudflareUrl: mergedConfig.cloudflareUrl,
@@ -162,10 +160,8 @@ async function applyConfig(config: AppConfig): Promise<void> {
         process.env.TURN_PASSWORD = config.webrtc.turnPassword;
     }
 
-    if (config.alexa) {
-        process.env.ALEXA_CLIENT_ID = config.alexa.clientId;
-        process.env.ALEXA_CLIENT_SECRET = config.alexa.clientSecret;
-        process.env.ALEXA_REDIRECT_URI = config.alexa.redirectUri;
+    if (config.cloudflare) {
+        process.env.CLOUDFLARE_TUNNEL_TOKEN = config.cloudflare.token;
     }
 
     if (config.discovery) {

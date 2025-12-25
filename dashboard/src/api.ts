@@ -33,10 +33,8 @@ export interface Config {
         turnUsername?: string;
         turnPassword?: string;
     };
-    alexa?: {
-        clientId?: string;
-        clientSecret?: string;
-        redirectUri?: string;
+    cloudflare?: {
+        token?: string;
     };
     discovery?: {
         autoDiscover: boolean;

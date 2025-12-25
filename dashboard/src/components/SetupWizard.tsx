@@ -29,10 +29,8 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
             interval: 300000,
             maxCameras: 16
         },
-        alexa: {
-            clientId: '',
-            clientSecret: '',
-            redirectUri: ''
+        cloudflare: {
+            token: ''
         }
     });
 
@@ -71,10 +69,10 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
         }));
     };
 
-    const updateAlexa = (field: string, value: any) => {
+    const updateCloudflare = (field: string, value: any) => {
         setConfig(prev => ({
             ...prev,
-            alexa: { ...prev.alexa!, [field]: value }
+            cloudflare: { ...prev.cloudflare!, [field]: value }
         }));
     };
 
@@ -90,7 +88,7 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
                     <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>1. DVR</div>
                     <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>2. WebRTC</div>
                     <div className={`progress-step ${step >= 3 ? 'active' : ''}`}>3. Discovery</div>
-                    <div className={`progress-step ${step >= 4 ? 'active' : ''}`}>4. Alexa</div>
+                    <div className={`progress-step ${step >= 4 ? 'active' : ''}`}>4. Cloudflare</div>
                 </div>
 
                 <div className="setup-content">
@@ -245,47 +243,26 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
 
                     {step === 4 && (
                         <div className="setup-step">
-                            <h2>Alexa Integration (Optional)</h2>
+                            <h2>Cloudflare Tunnel Integration</h2>
                             <p className="step-description">
-                                Configure Alexa Smart Home integration for Echo Show
+                                Configure Cloudflare Tunnel to expose your camera stream securely
                             </p>
 
                             <div className="info-box">
                                 <p>
-                                    <strong>Note:</strong> Alexa integration requires a Cloudflare Tunnel
-                                    and an Alexa Smart Home skill. You can skip this step and configure
-                                    it later.
+                                    <strong>Note:</strong> A Cloudflare Tunnel is required for valid HTTPS certificates, which are needed for camera streaming.
                                 </p>
                             </div>
 
                             <div className="form-group">
-                                <label>Alexa Client ID</label>
+                                <label>Cloudflare Tunnel Token</label>
                                 <input
                                     type="text"
-                                    value={config.alexa?.clientId}
-                                    onChange={e => updateAlexa('clientId', e.target.value)}
-                                    placeholder="amzn1.application-oa2-client..."
+                                    value={config.cloudflare?.token}
+                                    onChange={e => updateCloudflare('token', e.target.value)}
+                                    placeholder="eyJhIjoi..."
                                 />
-                            </div>
-
-                            <div className="form-group">
-                                <label>Alexa Client Secret</label>
-                                <input
-                                    type="password"
-                                    value={config.alexa?.clientSecret}
-                                    onChange={e => updateAlexa('clientSecret', e.target.value)}
-                                    placeholder="Enter client secret"
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label>Redirect URI</label>
-                                <input
-                                    type="text"
-                                    value={config.alexa?.redirectUri}
-                                    onChange={e => updateAlexa('redirectUri', e.target.value)}
-                                    placeholder="https://your-domain.com/auth/alexa/callback"
-                                />
+                                <small>Found in the Cloudflare Zero Trust dashboard under Access &gt; Tunnels</small>
                             </div>
                         </div>
                     )}
@@ -323,14 +300,14 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
                                 onClick={handleSubmit}
                                 disabled={loading || !config.dvr?.password}
                             >
-                                {loading ? 'Saving...' : 'Skip Alexa & Complete'}
+                                {loading ? 'Saving...' : 'Skip Tunnel & Complete'}
                             </button>
                             <button
                                 className="btn btn-primary"
                                 onClick={handleSubmit}
-                                disabled={loading || !config.dvr?.password || !config.alexa?.clientId}
+                                disabled={loading || !config.dvr?.password || !config.cloudflare?.token}
                             >
-                                {loading ? 'Saving...' : 'Complete with Alexa'}
+                                {loading ? 'Saving...' : 'Complete with Tunnel'}
                             </button>
                         </>
                     )}
